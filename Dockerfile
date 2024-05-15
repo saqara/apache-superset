@@ -80,9 +80,11 @@ COPY --chown=superset:superset pyproject.toml setup.py MANIFEST.in README.md ./
 # setup.py uses the version information in package.json
 COPY --chown=superset:superset superset-frontend/package.json superset-frontend/
 COPY --chown=superset:superset requirements/base.txt requirements/
+COPY --chown=superset:superset requirements/requirements-saqara.txt requirements/
 RUN --mount=type=cache,target=/root/.cache/pip \
     pip install --upgrade setuptools pip && \
-    pip install -r requirements/base.txt
+    pip install -r requirements/base.txt && \
+    pip install -r requirements/requirements-saqara.txt
 
 COPY --chown=superset:superset --from=superset-node /app/superset/static/assets superset/static/assets
 ## Lastly, let's install superset itself
